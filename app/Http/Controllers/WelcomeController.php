@@ -13,6 +13,8 @@ class WelcomeController extends Controller
 {
     public function welcome()
     {
-        return view('welcome')->with('categories',Category::all())->with('tags',Tag::all())->with('posts',Post::all())->with('users',User::all());
+
+        return view('welcome')->with('categories',Category::all())->with('tags',Tag::all())->with('posts',Post::searched()->paginate(2))->with('users',User::all());
     }
+
 }

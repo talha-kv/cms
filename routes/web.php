@@ -36,4 +36,9 @@ Route::middleware(['auth','admin'])->group(function()
     Route::put('users/profile','UsersController@update')->name('users.update-profile');
     
 });
+
 Route::get('/','WelcomeController@welcome')->name('welcome');
+Route::get('blog/posts/{post}','PostsController@show')->name('blog.show');
+Route::get('blog/categories/{category}','PostsController@category')->name('blog.category');
+Route::get('blog/tags/{tag}','PostsController@tag')->name('blog.tag');
+

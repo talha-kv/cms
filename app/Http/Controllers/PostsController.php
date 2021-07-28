@@ -56,8 +56,10 @@ class PostsController extends Controller
             'content' => $request->content,
             'image' => $image,
             'category_id' => $request->category,
+            'user_id' => auth()->user()->id,
             'published_at' => $request->published_at
         ]);
+
         if($request->tags)
         {
             $post->tags()->attach($request->tags);
@@ -73,9 +75,23 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        // dd("Hello");
+        return view('blogs.show')->with('post',$post)->with('tags',Tag::all());
+    }
+
+    public function category(Category $category)
+    {
+        // dd("Category");
+        // dd($category->posts()->searched());
+       
+        return view('blogs.category')->with('category',$category)->with('categories',Category::all())->with('tags',Tag::all())->with('posts',$category->posts()->searched()->paginate(2));
+    }
+
+    public function tag(Tag $tag)
+    {
+        return view('blogs.tag')->with('tag',$tag)->with('categories',Category::all())->with('posts',$tag->posts()->searched()->paginate(2))->with('tags',Tag::all());
     }
 
     /**
